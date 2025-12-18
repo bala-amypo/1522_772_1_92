@@ -1,4 +1,3 @@
-
 package com.example.demo.controller;
 
 import com.example.demo.entity.PatternDetectionResultEntity;
@@ -11,7 +10,6 @@ public class PatternDetectionResultController {
 
     private final PatternDetectionService service;
 
-    // ✅ constructor name fixed
     public PatternDetectionResultController(PatternDetectionService service) {
         this.service = service;
     }
