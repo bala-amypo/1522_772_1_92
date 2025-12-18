@@ -1,3 +1,4 @@
+
 package com.example.demo.controller;
 
 import com.example.demo.entity.PatternDetectionResultEntity;
@@ -8,9 +9,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/pattern")
 public class PatternDetectionResultController {
 
-    private final PatternDetectionResultService service;
+    private final PatternDetectionService service;
 
-    public PatternDetectionController(PatternDetectionResultService service) {
+    // ✅ constructor name fixed
+    public PatternDetectionResultController(PatternDetectionService service) {
         this.service = service;
     }
 
