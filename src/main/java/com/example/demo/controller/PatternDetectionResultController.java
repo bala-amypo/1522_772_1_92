@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/pattern")
-public class PatternDetectionController {
+public class PatternDetectionResultController {
 
-    private final PatternDetectionService service;
+    private final PatternDetectionResultService service;
 
-    public PatternDetectionController(PatternDetectionService service) {
+    public PatternDetectionController(PatternDetectionResultService service) {
         this.service = service;
     }
 
