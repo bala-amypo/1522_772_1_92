@@ -1,53 +1,53 @@
 package com.example.collectiondp.entity;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-public class PatternDetectionResultEntity {
+public class AnalysisLogEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
+    private String message;
 
-    private int crimeCount;
-    private String detectedPattern;
-    private LocalDate analysisDate;
+    @ManyToOne
+    private HotspotZoneEntity zone;
+
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
-    public int getCrimeCount() {
-        return crimeCount;
+
+    public String getMessage() {
+        return message;
     }
-    public void setCrimeCount(int crimeCount) {
-        this.crimeCount = crimeCount;
+
+    public void setMessage(String message) {
+        this.message = message;
     }
-    public String getDetectedPattern() {
-        return detectedPattern;
+
+    public HotspotZoneEntity getZone() {
+        return zone;
     }
-    public void setDetectedPattern(String detectedPattern) {
-        this.detectedPattern = detectedPattern;
+
+    public void setZone(HotspotZoneEntity zone) {
+        this.zone = zone;
     }
-    public LocalDate getAnalysisDate() {
-        return analysisDate;
+
+    public AnalysisLogEntity() {
     }
-    public void setAnalysisDate(LocalDate analysisDate) {
-        this.analysisDate = analysisDate;
-    }
-    public PatternDetectionResultEntity() {
-    }
-    public PatternDetectionResultEntity(Long id, int crimeCount, String detectedPattern, LocalDate analysisDate) {
+
+    public AnalysisLogEntity(Long id, String message, HotspotZoneEntity zone) {
         this.id = id;
-        this.crimeCount = crimeCount;
-        this.detectedPattern = detectedPattern;
-        this.analysisDate = analysisDate;
+        this.message = message;
+        this.zone = zone;
     }
 
     
