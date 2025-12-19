@@ -1,8 +1,8 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,24 +10,21 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepo;
+    @Autowired
+    private UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepo) {
-        this.userRepo = userRepo;
+    @Override
+    public List<UserEntity> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override
-    public UserEntity save(UserEntity user) {
-        return userRepo.save(user);
+    public UserEntity getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
-    public List<UserEntity> getAll() {
-        return userRepo.findAll();
-    }
-
-    @Override
-    public UserEntity getById(Long id) {
-        return userRepo.findById(id).orElse(null);
+    public UserEntity createUser(UserEntity user) {
+        return userRepository.save(user);
     }
 }

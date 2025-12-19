@@ -1,29 +1,32 @@
-package com.example.demo.entity;
+package com.example.demo.controller;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import com.example.demo.entity.UserEntity;
+import com.example.demo.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-@Entity
-@Table(name = "users")
-public class UserEntity {
+import java.util.List;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
 
-    @NotBlank(message = "Name cannot be empty")
-    @Size(min = 3, max = 50, message = "Name must be 3–50 characters")
-    private String name;
+    @Autowired
+    private UserService userService;
 
-    @NotBlank(message = "Role cannot be empty")
-    private String role;
+    @GetMapping
+    public List<UserEntity> getAllUsers() {
+        return userService.getAllUsers();
+    }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    @GetMapping("/email/{email}")
+    public UserEntity getUserByEmail(@PathVariable String email) {
+        return userService.getUserByEmail(email);
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
+    @PostMapping
+    public UserEntity createUser(@Valid @RequestBody UserEntity user) {
+        return userService.createUser(user);
+    }
 }
