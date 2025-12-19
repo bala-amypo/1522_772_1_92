@@ -1,29 +1,35 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.UserEntity;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
-    private final UserRepository repo;
+    @Autowired
+    private UserService userService;
 
-    public UserController(UserRepository repo) {
-        this.repo = repo;
-    }
-
-    @PostMapping
-    public UserEntity create(@Valid @RequestBody UserEntity user) {
-        return repo.save(user);
-    }
-
+    // GET all users
     @GetMapping
-    public List<UserEntity> getAll() {
-        return repo.findAll();
+    public List<UserEntity> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    // GET user by email
+    @GetMapping("/email/{email}")
+    public UserEntity getUserByEmail(@PathVariable String email) {
+        return userService.getUserByEmail(email);
+    }
+
+    // POST new user
+    @PostMapping
+    public UserEntity createUser(@Valid @RequestBody UserEntity user) {
+        return userService.createUser(user);
     }
 }
