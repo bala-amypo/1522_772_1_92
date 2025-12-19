@@ -5,7 +5,7 @@ import com.example.demo.service.PatternDetectionService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/pattern")
+@RequestMapping("/pattern-detection")
 public class PatternDetectionResultController {
 
     private final PatternDetectionService service;
@@ -15,7 +15,7 @@ public class PatternDetectionResultController {
     }
 
     @GetMapping("/{zoneId}")
-    public PatternDetectionResultEntity detectPattern(@PathVariable Long zoneId) {
+    public PatternDetectionResultEntity detect(@PathVariable Long zoneId) {
         return service.detect(zoneId);
     }
 }

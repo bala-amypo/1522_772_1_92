@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.HotspotZoneEntity;
 import com.example.demo.repository.HotspotZoneRepository;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,24 +11,19 @@ import java.util.List;
 @RequestMapping("/zones")
 public class HotspotZoneController {
 
-    private final HotspotZoneRepository zoneRepo;
+    private final HotspotZoneRepository repo;
 
-    public HotspotZoneController(HotspotZoneRepository zoneRepo) {
-        this.zoneRepo = zoneRepo;
+    public HotspotZoneController(HotspotZoneRepository repo) {
+        this.repo = repo;
     }
 
     @PostMapping
-    public HotspotZoneEntity createZone(@RequestBody HotspotZoneEntity zone) {
-        return zoneRepo.save(zone);
+    public HotspotZoneEntity create(@Valid @RequestBody HotspotZoneEntity zone) {
+        return repo.save(zone);
     }
 
     @GetMapping
-    public List<HotspotZoneEntity> getAllZones() {
-        return zoneRepo.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public HotspotZoneEntity getZoneById(@PathVariable Long id) {
-        return zoneRepo.findById(id).orElse(null);
+    public List<HotspotZoneEntity> getAll() {
+        return repo.findAll();
     }
 }

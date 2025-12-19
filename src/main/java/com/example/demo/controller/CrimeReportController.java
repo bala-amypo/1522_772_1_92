@@ -2,32 +2,28 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.CrimeReportEntity;
 import com.example.demo.repository.CrimeReportRepository;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/crimes")
+@RequestMapping("/crime-reports")
 public class CrimeReportController {
 
-    private final CrimeReportRepository crimeRepo;
+    private final CrimeReportRepository repo;
 
-    public CrimeReportController(CrimeReportRepository crimeRepo) {
-        this.crimeRepo = crimeRepo;
+    public CrimeReportController(CrimeReportRepository repo) {
+        this.repo = repo;
     }
 
     @PostMapping
-    public CrimeReportEntity addCrime(@RequestBody CrimeReportEntity crime) {
-        return crimeRepo.save(crime);
+    public CrimeReportEntity create(@Valid @RequestBody CrimeReportEntity report) {
+        return repo.save(report);
     }
 
     @GetMapping
-    public List<CrimeReportEntity> getAllCrimes() {
-        return crimeRepo.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public CrimeReportEntity getCrimeById(@PathVariable Long id) {
-        return crimeRepo.findById(id).orElse(null);
+    public List<CrimeReportEntity> getAll() {
+        return repo.findAll();
     }
 }

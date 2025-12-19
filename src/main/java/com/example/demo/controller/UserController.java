@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,24 +11,19 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserRepository userRepo;
+    private final UserRepository repo;
 
-    public UserController(UserRepository userRepo) {
-        this.userRepo = userRepo;
+    public UserController(UserRepository repo) {
+        this.repo = repo;
     }
 
     @PostMapping
-    public UserEntity saveUser(@RequestBody UserEntity user) {
-        return userRepo.save(user);
+    public UserEntity create(@Valid @RequestBody UserEntity user) {
+        return repo.save(user);
     }
 
     @GetMapping
-    public List<UserEntity> getAllUsers() {
-        return userRepo.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public UserEntity getUserById(@PathVariable Long id) {
-        return userRepo.findById(id).orElse(null);
+    public List<UserEntity> getAll() {
+        return repo.findAll();
     }
 }

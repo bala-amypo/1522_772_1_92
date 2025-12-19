@@ -7,22 +7,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/logs")
+@RequestMapping("/analysis-logs")
 public class AnalysisLogController {
 
-    private final AnalysisLogRepository logRepo;
+    private final AnalysisLogRepository repo;
 
-    public AnalysisLogController(AnalysisLogRepository logRepo) {
-        this.logRepo = logRepo;
+    public AnalysisLogController(AnalysisLogRepository repo) {
+        this.repo = repo;
     }
 
     @GetMapping
-    public List<AnalysisLogEntity> getAllLogs() {
-        return logRepo.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public AnalysisLogEntity getLogById(@PathVariable Long id) {
-        return logRepo.findById(id).orElse(null);
+    public List<AnalysisLogEntity> getAll() {
+        return repo.findAll();
     }
 }
