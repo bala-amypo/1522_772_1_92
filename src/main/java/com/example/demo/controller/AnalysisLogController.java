@@ -1,23 +1,27 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.AnalysisLogEntity;
-import com.example.demo.repository.AnalysisLogRepository;
+import com.example.demo.model.AnalysisLog;
+import com.example.demo.service.AnalysisLogService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/analysis-logs")
+@RequestMapping("/logs")
 public class AnalysisLogController {
 
-    private final AnalysisLogRepository repo;
+    private final AnalysisLogService logService;
 
-    public AnalysisLogController(AnalysisLogRepository repo) {
-        this.repo = repo;
+    public AnalysisLogController(AnalysisLogService logService) {
+        this.logService = logService;
     }
 
-    @GetMapping
-    public List<AnalysisLogEntity> getAll() {
-        return repo.findAll();
+    @PostMapping("/{zoneId}")
+    public AnalysisLog addLog(@PathVariable Long zoneId, @RequestBody String message) {
+        return logService.addLog(zoneId, message);
+    }
+
+    @GetMapping("/zone/{zoneId}")
+    public List<AnalysisLog> getLogsByZone(@PathVariable Long zoneId) {
+        return logService.getLogsByZone(zoneId);
     }
 }

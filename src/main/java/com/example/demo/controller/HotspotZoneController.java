@@ -1,29 +1,27 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.HotspotZoneEntity;
-import com.example.demo.repository.HotspotZoneRepository;
-import jakarta.validation.Valid;
+import com.example.demo.model.HotspotZone;
+import com.example.demo.service.HotspotZoneService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/zones")
 public class HotspotZoneController {
 
-    private final HotspotZoneRepository repo;
+    private final HotspotZoneService zoneService;
 
-    public HotspotZoneController(HotspotZoneRepository repo) {
-        this.repo = repo;
+    public HotspotZoneController(HotspotZoneService zoneService) {
+        this.zoneService = zoneService;
     }
 
     @PostMapping
-    public HotspotZoneEntity create(@Valid @RequestBody HotspotZoneEntity zone) {
-        return repo.save(zone);
+    public HotspotZone addZone(@RequestBody HotspotZone zone) {
+        return zoneService.addZone(zone);
     }
 
     @GetMapping
-    public List<HotspotZoneEntity> getAll() {
-        return repo.findAll();
+    public List<HotspotZone> getAllZones() {
+        return zoneService.getAllZones();
     }
 }
