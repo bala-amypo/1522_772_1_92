@@ -1,30 +1,32 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "analysis_log")
-public class AnalysisLogEntity {
+@Table(name = "analysis_logs")
+@Getter @Setter @NoArgsConstructor
+@AllArgsConstructor
+public class AnalysisLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Log message cannot be empty")
-    @Size(max = 255, message = "Message too long")
+    @NotBlank
     private String message;
 
-    @NotNull(message = "Hotspot zone must be provided")
+    private LocalDateTime loggedAt;
+
     @ManyToOne
-    private HotspotZoneEntity zone;
+    @JoinColumn(name = "zone_id", nullable = false)
+    private HotspotZone zone;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
-
-    public HotspotZoneEntity getZone() { return zone; }
-    public void setZone(HotspotZoneEntity zone) { this.zone = zone; }
+    @PrePersist
+    public void prePersist() {
+        this.loggedAt = LocalDateTime.now();
+    }
 }

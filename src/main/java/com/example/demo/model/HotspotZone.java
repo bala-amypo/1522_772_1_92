@@ -1,32 +1,40 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 @Entity
-@Table(name = "hotspot_zone")
-public class HotspotZoneEntity {
+@Table(name = "hotspot_zones")
+@Getter @Setter @NoArgsConstructor
+@AllArgsConstructor
+public class HotspotZone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Center latitude is required")
-    @DecimalMin(value = "-90.0")
-    @DecimalMax(value = "90.0")
+    @NotBlank
+    @Column(unique = true)
+    private String zoneName;
+
+    @NotNull
     private Double centerLat;
 
-    @NotNull(message = "Center longitude is required")
-    @DecimalMin(value = "-180.0")
-    @DecimalMax(value = "180.0")
+    @NotNull
     private Double centerLong;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    @NotBlank
+    private String severityLevel; // LOW, MEDIUM, HIGH
 
-    public Double getCenterLat() { return centerLat; }
-    public void setCenterLat(Double centerLat) { this.centerLat = centerLat; }
-
-    public Double getCenterLong() { return centerLong; }
-    public void setCenterLong(Double centerLong) { this.centerLong = centerLong; }
+    @PrePersist
+    public void validateCoordinates() {
+        if (centerLat < -90 || centerLat > 90) {
+            throw new IllegalArgumentException("latitude out of range");
+        }
+        if (centerLong < -180 || centerLong > 180) {
+            throw new IllegalArgumentException("longitude out of range");
+        }
+    }
 }

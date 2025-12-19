@@ -1,38 +1,46 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "crime_report")
-public class CrimeReportEntity {
+@Table(name = "crime_reports")
+@Getter @Setter @NoArgsConstructor
+@AllArgsConstructor
+public class CrimeReport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Latitude is required")
-    @DecimalMin(value = "-90.0", message = "Latitude must be ≥ -90")
-    @DecimalMax(value = "90.0", message = "Latitude must be ≤ 90")
-    private Double latitude;
-
-    @NotNull(message = "Longitude is required")
-    @DecimalMin(value = "-180.0", message = "Longitude must be ≥ -180")
-    @DecimalMax(value = "180.0", message = "Longitude must be ≤ 180")
-    private Double longitude;
-
-    @NotBlank(message = "Crime type cannot be empty")
+    @NotBlank
     private String crimeType;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    private String description;
 
-    public Double getLatitude() { return latitude; }
-    public void setLatitude(Double latitude) { this.latitude = latitude; }
+    @NotNull
+    private Double latitude;
 
-    public Double getLongitude() { return longitude; }
-    public void setLongitude(Double longitude) { this.longitude = longitude; }
+    @NotNull
+    private Double longitude;
 
-    public String getCrimeType() { return crimeType; }
-    public void setCrimeType(String crimeType) { this.crimeType = crimeType; }
+    @NotNull
+    private LocalDateTime occurredAt;
+
+    @PrePersist
+    public void validate() {
+        if (latitude < -90 || latitude > 90) {
+            throw new IllegalArgumentException("latitude out of range");
+        }
+        if (longitude < -180 || longitude > 180) {
+            throw new IllegalArgumentException("longitude out of range");
+        }
+        if (occurredAt.isAfter(LocalDateTime.now())) {
+            throw new IllegalArgumentException("occurredAt cannot be in the future");
+        }
+    }
 }

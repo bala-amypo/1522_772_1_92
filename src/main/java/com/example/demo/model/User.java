@@ -1,46 +1,46 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
-public class UserEntity {
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Name cannot be empty")
-    @Size(min = 3, max = 50, message = "Name must be 3–50 characters")
+    @NotBlank
     private String name;
 
-    @NotBlank(message = "Role cannot be empty")
-    private String role;
-
-    @NotBlank(message = "Email cannot be empty")
-    @Email(message = "Email should be valid")
+    @NotBlank
+    @Email
+    @Column(unique = true)
     private String email;
 
-    // Constructors (optional)
-    public UserEntity() {}
+    @NotBlank
+    private String password;
 
-    public UserEntity(String name, String role, String email) {
+    private String role;
+
+    private LocalDateTime createdAt;
+
+    public User(String name, String email, String password, String role) {
         this.name = name;
-        this.role = role;
         this.email = email;
+        this.password = password;
+        this.role = role;
     }
 
-    // Getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        if (this.role == null) this.role = "ANALYST";
+    }
 }
