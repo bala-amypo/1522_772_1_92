@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.*;
 import com.example.demo.repository.*;
 import com.example.demo.service.PatternDetectionService;
+import com.example.demo.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,7 +31,8 @@ public class PatternDetectionServiceImpl implements PatternDetectionService {
     public PatternDetectionResultEntity detect(Long zoneId) {
 
         HotspotZoneEntity zone = zoneRepo.findById(zoneId)
-                .orElseThrow(() -> new RuntimeException("Zone not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Hotspot Zone not found"));
 
         int count = crimeRepo
                 .findByLatitudeBetweenAndLongitudeBetween(
