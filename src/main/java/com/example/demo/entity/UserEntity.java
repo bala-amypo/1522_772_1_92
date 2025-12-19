@@ -1,32 +1,46 @@
-package com.example.demo.controller;
+package com.example.demo.entity;
 
-import com.example.demo.entity.UserEntity;
-import com.example.demo.service.UserService;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
-import java.util.List;
+@Entity
+@Table(name = "users")
+public class UserEntity {
 
-@RestController
-@RequestMapping("/api/users")
-public class UserController {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Autowired
-    private UserService userService;
+    @NotBlank(message = "Name cannot be empty")
+    @Size(min = 3, max = 50, message = "Name must be 3–50 characters")
+    private String name;
 
-    @GetMapping
-    public List<UserEntity> getAllUsers() {
-        return userService.getAllUsers();
+    @NotBlank(message = "Role cannot be empty")
+    private String role;
+
+    @NotBlank(message = "Email cannot be empty")
+    @Email(message = "Email should be valid")
+    private String email;
+
+    // Constructors (optional)
+    public UserEntity() {}
+
+    public UserEntity(String name, String role, String email) {
+        this.name = name;
+        this.role = role;
+        this.email = email;
     }
 
-    @GetMapping("/email/{email}")
-    public UserEntity getUserByEmail(@PathVariable String email) {
-        return userService.getUserByEmail(email);
-    }
+    // Getters and setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    @PostMapping
-    public UserEntity createUser(@Valid @RequestBody UserEntity user) {
-        return userService.createUser(user);
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 }
