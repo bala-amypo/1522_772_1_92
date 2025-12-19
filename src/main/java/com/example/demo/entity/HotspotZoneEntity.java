@@ -1,31 +1,32 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
+@Table(name = "hotspot_zone")
 public class HotspotZoneEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String zoneName;
-    private double centerLat;
-    private double centerLong;
-    private String severityLevel;
+    @NotNull(message = "Center latitude is required")
+    @DecimalMin(value = "-90.0")
+    @DecimalMax(value = "90.0")
+    private Double centerLat;
+
+    @NotNull(message = "Center longitude is required")
+    @DecimalMin(value = "-180.0")
+    @DecimalMax(value = "180.0")
+    private Double centerLong;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getZoneName() { return zoneName; }
-    public void setZoneName(String zoneName) { this.zoneName = zoneName; }
+    public Double getCenterLat() { return centerLat; }
+    public void setCenterLat(Double centerLat) { this.centerLat = centerLat; }
 
-    public double getCenterLat() { return centerLat; }
-    public void setCenterLat(double centerLat) { this.centerLat = centerLat; }
-
-    public double getCenterLong() { return centerLong; }
-    public void setCenterLong(double centerLong) { this.centerLong = centerLong; }
-
-    public String getSeverityLevel() { return severityLevel; }
-    public void setSeverityLevel(String severityLevel) { this.severityLevel = severityLevel; }
+    public Double getCenterLong() { return centerLong; }
+    public void setCenterLong(Double centerLong) { this.centerLong = centerLong; }
 }

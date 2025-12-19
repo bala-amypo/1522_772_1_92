@@ -1,16 +1,21 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
+@Table(name = "analysis_log")
 public class AnalysisLogEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Log message cannot be empty")
+    @Size(max = 255, message = "Message too long")
     private String message;
 
+    @NotNull(message = "Hotspot zone must be provided")
     @ManyToOne
     private HotspotZoneEntity zone;
 
