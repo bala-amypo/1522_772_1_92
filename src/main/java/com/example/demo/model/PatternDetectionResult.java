@@ -1,16 +1,10 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import lombok.*;
-
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "pattern_detection_results")
-@Getter @Setter @NoArgsConstructor
-@AllArgsConstructor
 public class PatternDetectionResult {
 
     @Id
@@ -18,14 +12,61 @@ public class PatternDetectionResult {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "zone_id", nullable = false)
+    @JoinColumn(name = "zone_id")
     private HotspotZone zone;
 
     private LocalDate analysisDate;
 
-    @Min(0)
     private Integer crimeCount;
 
-    @NotBlank
     private String detectedPattern;
+
+    public PatternDetectionResult() {
+    }
+
+    public PatternDetectionResult(HotspotZone zone, LocalDate analysisDate,
+                                  Integer crimeCount, String detectedPattern) {
+        this.zone = zone;
+        this.analysisDate = analysisDate;
+        this.crimeCount = crimeCount;
+        this.detectedPattern = detectedPattern;
+    }
+
+    // Getters and setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public HotspotZone getZone() {
+        return zone;
+    }
+
+    public void setZone(HotspotZone zone) {
+        this.zone = zone;
+    }
+
+    public LocalDate getAnalysisDate() {
+        return analysisDate;
+    }
+
+    public void setAnalysisDate(LocalDate analysisDate) {
+        this.analysisDate = analysisDate;
+    }
+
+    public Integer getCrimeCount() {
+        return crimeCount;
+    }
+
+    public void setCrimeCount(Integer crimeCount) {
+        this.crimeCount = crimeCount;
+    }
+
+    public String getDetectedPattern() {
+        return detectedPattern;
+    }
+
+    public void setDetectedPattern(String detectedPattern) {
+        this.detectedPattern = detectedPattern;
+    }
 }
