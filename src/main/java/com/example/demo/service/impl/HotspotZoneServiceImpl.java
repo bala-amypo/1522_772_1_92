@@ -1,33 +1,43 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.HotspotZoneEntity;
+import com.example.demo.model.HotspotZone;
 import com.example.demo.repository.HotspotZoneRepository;
 import com.example.demo.service.HotspotZoneService;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public class HotspotZoneServiceImpl implements HotspotZoneService {
 
-    private final HotspotZoneRepository zoneRepo;
+    private final HotspotZoneRepository zoneRepository;
 
-    public HotspotZoneServiceImpl(HotspotZoneRepository zoneRepo) {
-        this.zoneRepo = zoneRepo;
+    public HotspotZoneServiceImpl(HotspotZoneRepository zoneRepository) {
+        this.zoneRepository = zoneRepository;
     }
 
     @Override
-    public HotspotZoneEntity save(HotspotZoneEntity zone) {
-        return zoneRepo.save(zone);
+    public HotspotZone addZone(HotspotZone zone) {
+
+        if (zoneRepository.existsByZoneName(zone.getZoneName())) {
+            throw new IllegalArgumentException("zone already exists");
+        }
+
+        if (zone.getCenterLat() < -90 || zone.getCenterLat() > 90) {
+            throw new IllegalArgumentException("latitude out of range");
+        }
+
+        if (zone.getCenterLong() < -180 || zone.getCenterLong() > 180) {
+            throw new IllegalArgumentException("longitude out of range");
+        }
+
+        if (zone.getSeverityLevel() == null || zone.getSeverityLevel().isBlank()) {
+            zone.setSeverityLevel("LOW");
+        }
+
+        return zoneRepository.save(zone);
     }
 
     @Override
-    public List<HotspotZoneEntity> getAll() {
-        return zoneRepo.findAll();
-    }
-
-    @Override
-    public HotspotZoneEntity getById(Long id) {
-        return zoneRepo.findById(id).orElse(null);
+    public List<HotspotZone> getAllZones() {
+        return zoneRepository.findAll();
     }
 }

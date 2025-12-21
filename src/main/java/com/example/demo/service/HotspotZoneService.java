@@ -1,13 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.HotspotZoneEntity;
+import com.example.demo.model.HotspotZone;
 import java.util.List;
 
 public interface HotspotZoneService {
 
-    HotspotZoneEntity save(HotspotZoneEntity zone);
+    HotspotZone addZone(HotspotZone zone);
 
-    List<HotspotZoneEntity> getAll();
-
-    HotspotZoneEntity getById(Long id);
+    List<HotspotZone> getAllZones();
 }

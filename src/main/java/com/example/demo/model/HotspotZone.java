@@ -1,40 +1,68 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
 
 @Entity
 @Table(name = "hotspot_zones")
-@Getter @Setter @NoArgsConstructor
-@AllArgsConstructor
 public class HotspotZone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     @Column(unique = true)
     private String zoneName;
 
-    @NotNull
     private Double centerLat;
-
-    @NotNull
     private Double centerLong;
 
-    @NotBlank
-    private String severityLevel; // LOW, MEDIUM, HIGH
+    private String severityLevel;
 
-    @PrePersist
-    public void validateCoordinates() {
-        if (centerLat < -90 || centerLat > 90) {
-            throw new IllegalArgumentException("latitude out of range");
-        }
-        if (centerLong < -180 || centerLong > 180) {
-            throw new IllegalArgumentException("longitude out of range");
-        }
+    public HotspotZone() {
+    }
+
+    public HotspotZone(String zoneName, Double centerLat, Double centerLong, String severityLevel) {
+        this.zoneName = zoneName;
+        this.centerLat = centerLat;
+        this.centerLong = centerLong;
+        this.severityLevel = severityLevel;
+    }
+
+    // Getters and setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getZoneName() {
+        return zoneName;
+    }
+
+    public void setZoneName(String zoneName) {
+        this.zoneName = zoneName;
+    }
+
+    public Double getCenterLat() {
+        return centerLat;
+    }
+
+    public void setCenterLat(Double centerLat) {
+        this.centerLat = centerLat;
+    }
+
+    public Double getCenterLong() {
+        return centerLong;
+    }
+
+    public void setCenterLong(Double centerLong) {
+        this.centerLong = centerLong;
+    }
+
+    public String getSeverityLevel() {
+        return severityLevel;
+    }
+
+    public void setSeverityLevel(String severityLevel) {
+        this.severityLevel = severityLevel;
     }
 }
