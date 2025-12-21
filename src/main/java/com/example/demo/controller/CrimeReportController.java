@@ -3,25 +3,26 @@ package com.example.demo.controller;
 import com.example.demo.model.CrimeReport;
 import com.example.demo.service.CrimeReportService;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/reports")
 public class CrimeReportController {
 
-    private final CrimeReportService reportService;
+    private final CrimeReportService crimeReportService;
 
-    public CrimeReportController(CrimeReportService reportService) {
-        this.reportService = reportService;
+    public CrimeReportController(CrimeReportService crimeReportService) {
+        this.crimeReportService = crimeReportService;
     }
 
     @PostMapping
     public CrimeReport addReport(@RequestBody CrimeReport report) {
-        return reportService.addReport(report);
+        return crimeReportService.addReport(report);
     }
 
     @GetMapping
     public List<CrimeReport> getAllReports() {
-        return reportService.getAllReports();
+        return crimeReportService.getAllReports();
     }
 }

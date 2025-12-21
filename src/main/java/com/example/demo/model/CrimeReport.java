@@ -1,46 +1,78 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "crime_reports")
-@Getter @Setter @NoArgsConstructor
-@AllArgsConstructor
 public class CrimeReport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private String crimeType;
-
     private String description;
-
-    @NotNull
     private Double latitude;
-
-    @NotNull
     private Double longitude;
-
-    @NotNull
     private LocalDateTime occurredAt;
 
-    @PrePersist
-    public void validate() {
-        if (latitude < -90 || latitude > 90) {
-            throw new IllegalArgumentException("latitude out of range");
-        }
-        if (longitude < -180 || longitude > 180) {
-            throw new IllegalArgumentException("longitude out of range");
-        }
-        if (occurredAt.isAfter(LocalDateTime.now())) {
-            throw new IllegalArgumentException("occurredAt cannot be in the future");
-        }
+    public CrimeReport() {
+    }
+
+    public CrimeReport(String crimeType, String description,
+                       Double latitude, Double longitude,
+                       LocalDateTime occurredAt) {
+        this.crimeType = crimeType;
+        this.description = description;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.occurredAt = occurredAt;
+    }
+
+    // Getters and setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getCrimeType() {
+        return crimeType;
+    }
+
+    public void setCrimeType(String crimeType) {
+        this.crimeType = crimeType;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+ 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+ 
+    public Double getLatitude() {
+        return latitude;
+    }
+ 
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+ 
+    public Double getLongitude() {
+        return longitude;
+    }
+ 
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+ 
+    public LocalDateTime getOccurredAt() {
+        return occurredAt;
+    }
+ 
+    public void setOccurredAt(LocalDateTime occurredAt) {
+        this.occurredAt = occurredAt;
     }
 }

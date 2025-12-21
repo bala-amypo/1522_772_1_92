@@ -1,13 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.CrimeReportEntity;
+import com.example.demo.model.CrimeReport;
 import java.util.List;
 
 public interface CrimeReportService {
 
-    CrimeReportEntity save(CrimeReportEntity crime);
+    CrimeReport addReport(CrimeReport report);
 
-    List<CrimeReportEntity> getAll();
-
-    CrimeReportEntity getById(Long id);
+    List<CrimeReport> getAllReports();
 }
