@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.PatternDetectionResult;
 import com.example.demo.service.PatternDetectionService;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -16,12 +17,12 @@ public class PatternDetectionController {
     }
 
     @PostMapping("/detect/{zoneId}")
-    public PatternDetectionResult detectPattern(@PathVariable Long zoneId) {
+    public PatternDetectionResult detect(@PathVariable Long zoneId) {
         return patternService.detectPattern(zoneId);
     }
 
     @GetMapping("/zone/{zoneId}")
-    public List<PatternDetectionResult> getResultsByZone(@PathVariable Long zoneId) {
+    public List<PatternDetectionResult> getResults(@PathVariable Long zoneId) {
         return patternService.getResultsByZone(zoneId);
     }
 }
