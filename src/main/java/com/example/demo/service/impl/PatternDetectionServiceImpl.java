@@ -7,7 +7,9 @@ import com.example.demo.service.PatternDetectionService;
 
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PatternDetectionServiceImpl implements PatternDetectionService {
 
     private final HotspotZoneRepository zoneRepo;
