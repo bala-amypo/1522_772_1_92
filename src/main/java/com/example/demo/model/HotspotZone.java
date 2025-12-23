@@ -16,7 +16,7 @@ public class HotspotZone {
     private Double centerLat;
     private Double centerLong;
 
-    private String securityLevel;
+    private String severityLevel;
 
     public HotspotZone() {
     }
@@ -25,10 +25,10 @@ public class HotspotZone {
         this.zoneName = zoneName;
         this.centerLat = centerLat;
         this.centerLong = centerLong;
-        this.securityLevel = securityLevel;
+        this.severityLevel = severityLevel;
     }
 
-  
+    // Getters and setters
 
     public Long getId() {
         return id;
@@ -58,11 +58,11 @@ public class HotspotZone {
         this.centerLong = centerLong;
     }
 
-    public String getSecurityLevel() {
-        return securityLevel;
+    public String getSeverityLevel() {
+        return severityLevel;
     }
 
-    public void setSecurityLevel(String securityLevel) {
-        this.securityLevel = securityLevel;
+    public void setSeverityLevel(String severityLevel) {
+        this.severityLevel = severityLevel;
     }
 }
