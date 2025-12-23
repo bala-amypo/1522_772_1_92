@@ -31,8 +31,8 @@ public class HotspotZoneServiceImpl implements HotspotZoneService {
             throw new IllegalArgumentException("longitude out of range");
         }
 
-        if (zone.getSeverityLevel() == null || zone.getSeverityLevel().isBlank()) {
-            zone.setSeverityLevel("LOW");
+        if (zone.getSecurityLevel() == null || zone.getSecurityLevel().isBlank()) {
+            zone.setSecurityLevel("LOW");
         }
 
         return zoneRepository.save(zone);
