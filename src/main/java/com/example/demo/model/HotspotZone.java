@@ -28,7 +28,6 @@ public class HotspotZone {
         this.severityLevel = severityLevel;
     }
 
-    // Getters and setters
 
     public Long getId() {
         return id;

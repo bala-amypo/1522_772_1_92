@@ -30,7 +30,7 @@ public class CrimeReport {
         this.occurredAt = occurredAt;
     }
 
-    // Getters and setters
+    
 
     public Long getId() {
         return id;

@@ -12,5 +12,5 @@ public interface HotspotZoneRepository extends JpaRepository<HotspotZone, Long> 
 
     Optional<HotspotZone> findByZoneName(String zoneName);
 
-    List<HotspotZone> findBySecurityLevel(String securityLevel);
+    List<HotspotZone> findBySeverityLevel(String severityLevel);
 }
