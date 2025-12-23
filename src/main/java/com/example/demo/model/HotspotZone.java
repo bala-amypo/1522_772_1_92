@@ -16,7 +16,7 @@ public class HotspotZone {
     private Double centerLat;
     private Double centerLong;
 
-    private String severityLevel;
+    private String securityLevel;
 
     public HotspotZone() {
     }
