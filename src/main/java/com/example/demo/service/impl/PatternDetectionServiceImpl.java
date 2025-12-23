@@ -46,17 +46,17 @@ public class PatternDetectionServiceImpl implements PatternDetectionService {
         int count = crimes.size();
 
         String pattern;
-        String severity;
+        String security;
 
         if (count > 5) {
             pattern = "High Risk Pattern Detected";
-            severity = "HIGH";
+            security = "HIGH";
         } else if (count > 0) {
             pattern = "Medium Risk Pattern Detected";
-            severity = "MEDIUM";
+            security = "MEDIUM";
         } else {
             pattern = "No Pattern Detected";
-            severity = "LOW";
+            security = "LOW";
         }
 
         PatternDetectionResult result = new PatternDetectionResult();
@@ -67,7 +67,7 @@ public class PatternDetectionServiceImpl implements PatternDetectionService {
 
         resultRepo.save(result);
 
-        zone.setSeverityLevel(severity);
+        zone.setSecurityLevel(severity);
         zoneRepo.save(zone);
 
         AnalysisLog log = new AnalysisLog(
