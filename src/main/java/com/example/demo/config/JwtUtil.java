@@ -3,65 +3,32 @@ package com.example.demo.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
-@Component
+import java.util.Date;
+
 public class JwtUtil {
-    
-    @Value("${jwt.secret}")
-    private String secret;
-    
-    @Value("${jwt.expiration}")
-    private Long expiration;
-    
-    private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(secret.getBytes());
-    }
-    
+
+    private final String secret =
+            "9a4f2c8d3b7a1e6f45c8a0b3f267d8b1d4e6f3c8a9d2b5f8e3a9c8b5f6d7a4b2";
+
+    private final long expiration = 86400000; // 24 hours
+
     public String generateToken(Long userId, String email, String role) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", userId);
-        claims.put("email", email);
-        claims.put("role", role);
-        
+
         return Jwts.builder()
-                .setClaims(claims)
+                .claim("userId", userId)
+                .claim("email", email)
+                .claim("role", role)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
-    
+
     public Claims parseToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
+        return Jwts.parser()
+                .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
-    }
-    
-    public boolean validateToken(String token) {
-        try {
-            parseToken(token);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-    
-    public String getEmailFromToken(String token) {
-        Claims claims = parseToken(token);
-        return claims.get("email", String.class);
-    }
-    
-    public String getRoleFromToken(String token) {
-        Claims claims = parseToken(token);
-        return claims.get("role", String.class);
     }
 }
