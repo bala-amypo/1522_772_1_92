@@ -20,11 +20,13 @@ public class AnalysisLog {
     private HotspotZone zone;
 
     public AnalysisLog() {
+        this.loggedAt = LocalDateTime.now();
     }
 
     public AnalysisLog(String message, HotspotZone zone) {
         this.message = message;
         this.zone = zone;
+        this.loggedAt = LocalDateTime.now();
     }
 
     @PrePersist
