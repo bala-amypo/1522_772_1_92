@@ -23,7 +23,7 @@ public class AnalysisLogServiceImpl implements AnalysisLogService {
     public AnalysisLog addLog(Long zoneId, String message) {
 
         HotspotZone zone = zoneRepo.findById(zoneId)
-                .orElseThrow(() -> new RuntimeException("zone not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("zone not found"));
 
         AnalysisLog log = new AnalysisLog(message, zone);
         return logRepo.save(log);
