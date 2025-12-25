@@ -1,4 +1,4 @@
-package com.example.demo.model;
+/*package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -57,4 +57,4 @@ public class AnalysisLog {
     public void setZone(HotspotZone zone) {
         this.zone = zone;
     }
-}
+}*/
