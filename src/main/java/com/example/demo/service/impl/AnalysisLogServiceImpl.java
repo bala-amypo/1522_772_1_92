@@ -6,7 +6,9 @@ import com.example.demo.repository.AnalysisLogRepository;
 import com.example.demo.repository.HotspotZoneRepository;
 import com.example.demo.service.AnalysisLogService;
 import com.example.demo.exception.ResourceNotFoundException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AnalysisLogServiceImpl implements AnalysisLogService {
 
     private final AnalysisLogRepository logRepo;
