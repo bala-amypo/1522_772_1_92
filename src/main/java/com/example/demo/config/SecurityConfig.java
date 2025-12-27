@@ -20,7 +20,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // ✅ USERNAME & PASSWORD DEFINED HERE
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder encoder) {
 
