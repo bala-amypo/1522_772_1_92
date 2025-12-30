@@ -25,4 +25,4 @@ public class HotspotZoneController {
     public List<HotspotZone> getAllZones() {
         return zoneService.getAllZones();
     }
-}
+}`
